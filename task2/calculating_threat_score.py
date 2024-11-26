@@ -38,34 +38,40 @@ class TestCyberSecurityScore(unittest.TestCase):
     def test_aggregated_score_no_outliers(self):
         departments = generate_random_data(department_count=5, user_range=(10, 200), threat_range=(50, 60), importance_range=(3, 3))
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_aggregated_score_no_outliers': {score}")
         self.assertGreaterEqual(score, 0)
         self.assertLessEqual(score, 90)
 
     def test_aggregated_score_with_high_variance(self):
         departments = generate_random_data(department_count=5, user_range=(50, 150), threat_range=(0, 90), importance_range=(2, 5))
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_aggregated_score_with_high_variance': {score}")
         self.assertGreaterEqual(score, 0)
         self.assertLessEqual(score, 90)
     
     def test_aggregated_score_with_uneven_importance(self):
         departments = generate_random_data(department_count=5, user_range=(50, 150), threat_range=(0, 90), importance_range=(1, 5))
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_aggregated_score_with_uneven_importance': {score}")
         self.assertGreaterEqual(score, 0)
         self.assertLessEqual(score, 90)
 
     def test_edge_case_min_values(self):
         departments = [{"users": 10, "threat_scores": [0]*10, "importance": 1} for _ in range(5)]
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_edge_case_min_values': {score}")
         self.assertEqual(score, 0)
 
     def test_edge_case_max_values(self):
         departments = [{"users": 200, "threat_scores": [90]*200, "importance": 5} for _ in range(5)]
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_edge_case_max_values': {score}")
         self.assertEqual(score, 90)
 
     def test_no_users(self):
         departments = [{"users": 0, "threat_scores": [], "importance": 3} for _ in range(5)]
         score = calculate_aggregated_threat_score(departments)
+        print(f"Test 'test_no_users': {score}")
         self.assertEqual(score, 0)
 
 if __name__ == "__main__":
