@@ -1,6 +1,7 @@
 import random
 import unittest
 
+#generate random data
 def generate_random_data(department_count=5, user_range=(10, 200), threat_range=(0, 90), importance_range=(1, 5)):
     departments = []
     for _ in range(department_count):
